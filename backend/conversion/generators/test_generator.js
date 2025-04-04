@@ -1,18 +1,28 @@
-const { parseJSX } = require("../parsers/jsxParser");
-const { mapToFlutter } = require("../generators/flutterMapper");
-const { generateDartFile } = require("../generators/dartGenerator");
+const { mapToFlutter } = require("./flutterMapper");
 
-const sampleJSX = `
-function App() {
-    return <div className="container">
-        <h1>Hello, World!</h1>
-        <button onClick={handleClick}>Click Me</button>
-    </div>;
-}
-`;
+const jsxInput = [
+    {
+        type: "div",
+        props: {
+            style: {
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center"
+            }
+        },
+        children: [
+            {
+                type: "h1",
+                props: { children: "Hello" }
+            },
+            {
+                type: "button",
+                props: { children: "Click", onClick: "handleClick" }
+            }
+        ]
+    }
+];
 
-const parsedJSX = parseJSX(sampleJSX);
-const flutterWidgets = mapToFlutter(parsedJSX);
-const dartCode = generateDartFile(flutterWidgets);
-
-console.log("🚀 Generated Dart Code:\n", dartCode);
+console.log("🔥 Converted Flutter Code:");
+console.log(mapToFlutter(jsxInput).join("\n"));
